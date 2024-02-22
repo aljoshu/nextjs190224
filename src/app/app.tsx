@@ -1,7 +1,5 @@
 'use client'
-
-import { useState, useEffect } from "react";
-import React from 'react';
+import React, { useState, useEffect } from "react";
 
 interface Product {
   category: string;
@@ -38,7 +36,9 @@ interface FilterableProductTableProps {
 function ProductCategoryRow({ category }: ProductCategoryRowProps) {
   return (
     <tr>
-      <th colSpan={2}>{category}</th>
+      <th colSpan={2} className="py-2 text-center border border-gray-300">
+        {category}
+      </th>
     </tr>
   );
 }
@@ -47,13 +47,13 @@ function ProductRow({ product }: ProductRowProps) {
   const name: JSX.Element = product.stocked ? (
     <>{product.name}</>
   ) : (
-    <span style={{ color: 'red' }}>{product.name}</span>
+    <span className="text-red-500">{product.name}</span>
   );
 
   return (
     <tr>
-      <td>{name}</td>
-      <td>{product.price}</td>
+      <td className="py-2 text-center">{name}</td>
+      <td className="py-2 text-center">{product.price}</td>
     </tr>
   );
 }
@@ -77,7 +77,8 @@ function ProductTable({ products, filterText, inStockOnly }: ProductTableProps) 
       rows.push(
         <ProductCategoryRow
           category={product.category}
-          key={product.category} />
+          key={product.category}
+        />
       );
     }
     rows.push(
@@ -89,11 +90,11 @@ function ProductTable({ products, filterText, inStockOnly }: ProductTableProps) 
   });
   
   return (
-    <table>
+    <table className="w-full table-auto border-collapse border border-gray-300">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Price</th>
+          <th className="py-2 w-1/2 border border-gray-300">Name</th>
+          <th className="py-2 w-1/2 border border-gray-300">Price</th>
         </tr>
       </thead>
       <tbody>{rows}</tbody>
@@ -111,20 +112,22 @@ function SearchBar({ filterText, inStockOnly, setFilterText, setInStockOnly }: S
   };
 
   return (
-    <form>
+    <form className="max-w-sm mx-auto my-4">
       <input
         type="text"
         value={filterText}
         onChange={handleFilterTextChange}
+        className="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500 text-gray-900"
         placeholder="Search..."
       />
-      <label>
+      <label className="block mt-2">
         <input
           type="checkbox"
           checked={inStockOnly}
           onChange={handleInStockChange}
-        />{' '}
-        Only show products in stock
+          className="mr-1 leading-tight"
+        />
+        <span className="text-sm">Only show products in stock</span>
       </label>
     </form>
   );
@@ -142,7 +145,7 @@ function FilterableProductTable({ products }: FilterableProductTableProps) {
   }, []);
 
   return (
-    <div>
+    <div className="container mx-auto px-4">
       <SearchBar
         filterText={filterText}
         inStockOnly={inStockOnly}
@@ -157,7 +160,6 @@ function FilterableProductTable({ products }: FilterableProductTableProps) {
     </div>
   );
 }
-
 
 export default function Page() {
   const PRODUCTS: Product[] = [
