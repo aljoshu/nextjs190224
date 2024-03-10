@@ -1,5 +1,10 @@
 'use client'
 import React, { useState, useEffect } from "react";
+import { Metadata } from 'next'
+ 
+export const metadata: Metadata = {
+  title: 'App',
+}
 
 interface Product {
   category: string;
